@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rux99 — Free Fire Booster</title>
+  <link rel="icon" href="assets/rux99.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/fonts.css">
+  <script src="assets/tailwind.js"></script>
+  <link rel="stylesheet" href="assets/fontawesome.css">
+  <style>
+    button:disabled { opacity: .5; cursor: wait; }
+    button:focus-visible, a:focus-visible { outline: 2px solid #fbbf24; outline-offset: 4px; }
+    
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background-color: #0b0e14;
+      color: #e2e8f0;
+    }
+
+    .font-gaming {
+      font-family: 'Orbitron', sans-serif;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #ef4444;
+      border-radius: 3px;
+    }
+
+    /* Pulse Glow Animations */
+    .glow-red {
+      box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+    }
+    .glow-orange {
+      box-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+    }
+    .glow-green {
+      box-shadow: 0 0 15px rgba(34, 197, 94, 0.4);
+    }
+
+    .pulse-border {
+      animation: pulse-red 2s infinite;
+    }
+
+    @keyframes pulse-red {
+      0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+      70% { box-shadow: 0 0 0 12px rgba(239, 68, 68, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+    }
+
+    .bg-grid {
+      background-size: 30px 30px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+  </style>
+</head>
+<body class="bg-grid min-h-screen flex flex-col items-center p-2 sm:p-6">
+
+  <!-- Header Banner -->
+  <header class="w-full max-w-5xl mb-6 flex flex-col md:flex-row items-center justify-between bg-slate-900/80 backdrop-blur border border-slate-800 p-4 rounded-xl shadow-xl gap-4">
+    <div class="flex items-center space-x-3">
+      <div class="w-12 h-12 bg-gradient-to-tr from-red-600 to-amber-500 rounded-lg flex items-center justify-center shadow-lg text-2xl font-bold text-white">
+        <img src="assets/rux99.svg" alt="Rux99" class="w-12 h-12 rounded-lg">
+      </div>
+      <div>
+        <h1 class="text-2xl font-extrabold font-gaming tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-red-500 via-orange-400 to-amber-300">
+          Rux99
+        </h1>
+        <p class="text-xs text-slate-400 flex items-center gap-1">
+          <i class="fa-solid fa-mobile-screen text-amber-500"></i> FREE FIRE · SHIZUKU BOOSTER
+        </p>
+      </div>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="flex bg-slate-950 p-1 rounded-lg border border-slate-800">
+      <button id="btn-tab-app" onclick="switchTab('app')" class="px-5 py-2 rounded-md font-bold text-sm transition-all bg-red-600 text-white shadow-md">
+        <i class="fa-solid fa-gamepad mr-2"></i>Booster
+      </button>
+      <button id="btn-tab-code" onclick="switchTab('code')" class="px-5 py-2 rounded-md font-bold text-sm transition-all text-slate-400 hover:text-white">
+        <i class="fa-solid fa-code mr-2"></i>Setup & APK
+      </button>
+    </div>
+  </header>
+
+  <!-- TAB 1: INTERACTIVE APP SIMULATOR -->
+  <main id="tab-app" class="w-full max-w-5xl grid grid-cols-1 md:grid-cols-12 gap-6">
+
+    <!-- Left Controls Panel -->
+    <div class="md:col-span-7 flex flex-col gap-5">
+      
+      <!-- Device System Stats Card -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-2xl relative overflow-hidden">
+        <div class="absolute -right-10 -top-10 w-32 h-32 bg-red-600/10 rounded-full blur-2xl"></div>
+        <h2 class="text-xs uppercase tracking-widest text-slate-400 font-bold mb-4 flex items-center justify-between">
+          <span>System Diagnostics</span>
+          <span class="text-xs text-emerald-400 flex items-center gap-1">
+            <span id="connection-state">Shizuku required</span>
+          </span>
+        </h2>
+
+        <div class="grid grid-cols-3 gap-3">
+          <!-- Stat 1 -->
+          <div class="bg-slate-950/70 border border-slate-800 p-3 rounded-xl text-center">
+            <span class="text-xs text-slate-500 block mb-1">RAM Free</span>
+            <span id="stat-ram" class="text-xl font-bold font-gaming text-amber-400">—</span>
+            <span class="text-[10px] text-slate-400 block mt-1">Available memory</span>
+          </div>
+          <!-- Stat 2 -->
+          <div class="bg-slate-950/70 border border-slate-800 p-3 rounded-xl text-center">
+            <span class="text-xs text-slate-500 block mb-1">Animations</span>
+            <span id="stat-anim" class="text-xl font-bold font-gaming text-red-500">—</span>
+            <span class="text-[10px] text-slate-400 block mt-1">Window/Transition</span>
+          </div>
+          <!-- Stat 3 -->
+          <div class="bg-slate-950/70 border border-slate-800 p-3 rounded-xl text-center">
+            <span class="text-xs text-slate-500 block mb-1">Game Mode</span>
+            <span id="stat-mode" class="text-xl font-bold font-gaming text-emerald-400">—</span>
+            <span class="text-[10px] text-slate-400 block mt-1">Device dependent</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ONE-CLICK BOOST BIG BUTTON -->
+      <button onclick="runFullBoost()" id="btn-full-boost" class="w-full relative group overflow-hidden bg-gradient-to-r from-red-600 via-orange-600 to-amber-600 hover:from-red-500 hover:to-amber-500 text-white font-gaming py-5 px-6 rounded-2xl shadow-2xl transition-all transform hover:scale-[1.01] active:scale-[0.99] pulse-border">
+        <div class="flex items-center justify-center gap-3 text-xl font-black tracking-wider uppercase">
+          <i class="fa-solid fa-bolt text-2xl animate-bounce"></i>
+          <span>One-Click Master Boost</span>
+        </div>
+        <p class="text-xs font-sans text-amber-100 opacity-90 text-center mt-1">Runs supported commands through Shizuku & launches Free Fire</p>
+      </button>
+
+      <!-- Granular Actions -->
+      <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-2xl">
+        <h2 class="text-xs uppercase tracking-widest text-slate-400 font-bold mb-4">Granular Commands</h2>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <!-- Action 1 -->
+          <button onclick="executeSingleCommand('anim')" class="flex items-center justify-between bg-slate-950/80 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 p-3 rounded-xl transition text-left group">
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-play text-red-500 group-hover:scale-110 transition"></i>
+              <div>
+                <div class="text-sm font-bold text-slate-200">Zero Animations</div>
+                <div class="text-[11px] text-slate-500">Speed up UI response</div>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-xs text-slate-600"></i>
+          </button>
+
+          <!-- Action 2 -->
+          <button onclick="executeSingleCommand('gpu')" class="flex items-center justify-between bg-slate-950/80 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 p-3 rounded-xl transition text-left group">
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-microchip text-orange-500 group-hover:scale-110 transition"></i>
+              <div>
+                <div class="text-sm font-bold text-slate-200">Force GPU Render</div>
+                <div class="text-[11px] text-slate-500">Hardware acceleration</div>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-xs text-slate-600"></i>
+          </button>
+
+          <!-- Action 3 -->
+          <button onclick="executeSingleCommand('compile')" class="flex items-center justify-between bg-slate-950/80 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 p-3 rounded-xl transition text-left group">
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-rocket text-amber-500 group-hover:scale-110 transition"></i>
+              <div>
+                <div class="text-sm font-bold text-slate-200">Speed Compilation</div>
+                <div class="text-[11px] text-slate-500">Pre-compile app code</div>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-xs text-slate-600"></i>
+          </button>
+
+          <!-- Action 4 -->
+          <button onclick="executeSingleCommand('launch')" class="flex items-center justify-between bg-slate-950/80 hover:bg-slate-800 border border-slate-800 hover:border-slate-700 p-3 rounded-xl transition text-left group">
+            <div class="flex items-center gap-3">
+              <i class="fa-solid fa-crosshairs text-emerald-500 group-hover:scale-110 transition"></i>
+              <div>
+                <div class="text-sm font-bold text-slate-200">Launch Free Fire</div>
+                <div class="text-[11px] text-slate-500">Open installed game</div>
+              </div>
+            </div>
+            <i class="fa-solid fa-chevron-right text-xs text-slate-600"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Console / ADB Terminal Panel -->
+    <div class="md:col-span-5 flex flex-col">
+      <div class="bg-slate-950 border border-slate-800 rounded-2xl flex flex-col h-full shadow-2xl overflow-hidden min-h-[380px]">
+        <!-- Terminal Header -->
+        <div class="bg-slate-900 border-b border-slate-800 px-4 py-3 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="w-3 h-3 rounded-full bg-red-500"></span>
+            <span class="w-3 h-3 rounded-full bg-amber-500"></span>
+            <span class="w-3 h-3 rounded-full bg-emerald-500"></span>
+            <span class="text-xs font-mono text-slate-400 ml-2">ADB Shell Output Log</span>
+          </div>
+          <button onclick="clearConsole()" class="text-xs text-slate-500 hover:text-slate-300">
+            <i class="fa-solid fa-trash mr-1"></i>Clear
+          </button>
+        </div>
+
+        <!-- Terminal Output Screen -->
+        <div id="console-output" role="log" aria-live="polite" class="p-4 font-mono text-xs overflow-y-auto flex-1 space-y-2 text-slate-300">
+          <div class="text-slate-500">// Rux99 ready. Connect Shizuku in the Android app to run commands.</div>
+        </div>
+
+        <!-- Terminal Input status bar -->
+        <div class="bg-slate-900/60 border-t border-slate-800 p-2.5 text-[11px] font-mono text-slate-500 flex justify-between items-center">
+          <span>Status: <span id="status-text" class="text-emerald-400">IDLE</span></span>
+          <span id="log-count">lines</span>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <section id="tab-code" class="w-full max-w-5xl hidden flex flex-col gap-6">
+    <div class="bg-slate-900 border border-slate-800 rounded-2xl p-6 shadow-2xl">
+      <h2 class="text-xl font-bold font-gaming text-amber-400 mb-4">Rux99 · Android setup</h2>
+      <ol class="list-decimal pl-5 space-y-3 text-slate-300">
+        <li>Install and start <a class="text-amber-400 underline" href="https://shizuku.rikka.app/guide/setup/">Shizuku</a> using wireless debugging (Android 11+) or a computer with ADB.</li>
+        <li>Open Rux99 and tap Connect Shizuku. Allow Rux99 in the Shizuku permission prompt.</li>
+        <li>Wait for Connected, then use the boost button. Unsupported commands show their actual errors. Performance improvements depend on your phone.</li>
+      </ol>
+      <button onclick="connectShizuku()" class="mt-5 bg-red-600 text-white font-bold px-5 py-3 rounded-lg">Connect Shizuku</button>
+      <p id="setup-status" role="status" class="mt-3 text-amber-300">Android app required. This website cannot change phone settings.</p>
+      <p class="mt-4 text-sm text-slate-400">Boost disables Android animations, requests performance mode, exempts Free Fire from battery restrictions, clears background apps and compiles the game. These changes can increase battery use and heat. Restart Shizuku after a reboot. Free Fire package: com.dts.freefireth.</p>
+      <button onclick="executeSingleCommand('restore')" class="mt-4 border border-slate-600 px-4 py-2 rounded-lg">Restore standard settings</button>
+      <p class="mt-2 text-sm text-slate-400">Restore sets animations to 1×, disables fixed performance mode, selects standard game mode and removes the battery exemption. It does not restore custom previous settings or undo compilation.</p>
+    </div>
+
+  </section>
+
+  <script>
+    let logCount = 1;
+    let busy = false;
+    const native = typeof Rux99Native !== 'undefined';
+    function appendConsoleLog(cmd, output, ok = false) {
+      const terminal = document.getElementById('console-output');
+      for (const [text, style] of [[`$ ${cmd}`, 'text-amber-400 mt-2'], [output, ok ? 'text-emerald-400' : 'text-slate-300']]) {
+        const line = document.createElement('div');
+        line.className = style + ' whitespace-pre-wrap break-words';
+        line.textContent = text;
+        terminal.appendChild(line);
+      }
+      terminal.scrollTop = terminal.scrollHeight;
+      logCount += 2;
+      document.getElementById('log-count').textContent = `${logCount} lines`;
+    }
+    function clearConsole() {
+      document.getElementById('console-output').textContent = '// Terminal cleared.';
+      logCount = 1;
+      document.getElementById('log-count').textContent = '1 line';
+    }
+    function connectShizuku() {
+      if (native) Rux99Native.connect();
+      else document.getElementById('setup-status').textContent = 'Open the Rux99 Android app to connect Shizuku. The website cannot run ADB commands.';
+    }
+    function runFullBoost() { executeSingleCommand('boost'); }
+    function executeSingleCommand(action) {
+      if (busy) return;
+      if (!native) {
+        appendConsoleLog(action, 'Android app + running Shizuku required. No phone settings have been changed.');
+        switchTab('code');
+        return;
+      }
+      busy = true;
+      document.querySelectorAll('button[onclick^="executeSingleCommand"], #btn-full-boost').forEach(b => b.disabled = true);
+      document.getElementById('status-text').textContent = 'RUNNING…';
+      Rux99Native.run(action);
+    }
+    window.onRux99State = function(state) {
+      document.getElementById('connection-state').textContent = state.connected ? 'Connected' : 'Shizuku required';
+      document.getElementById('setup-status').textContent = state.message;
+      if (state.ram) document.getElementById('stat-ram').textContent = state.ram;
+    };
+    window.onRux99Result = function(result) {
+      busy = false;
+      document.querySelectorAll('button[onclick^="executeSingleCommand"], #btn-full-boost').forEach(b => b.disabled = false);
+      appendConsoleLog(result.action, result.output, result.ok);
+      document.getElementById('status-text').textContent = result.ok ? 'COMPLETED' : 'CHECK OUTPUT';
+      if (result.ok && (result.action === 'anim' || result.action === 'restore')) document.getElementById('stat-anim').textContent = result.action === 'restore' ? '1×' : '0×';
+    };
+    if (native) Rux99Native.status();
+
+    function switchTab(tabName) {
+      const tabApp = document.getElementById('tab-app');
+      const tabCode = document.getElementById('tab-code');
+      const btnApp = document.getElementById('btn-tab-app');
+      const btnCode = document.getElementById('btn-tab-code');
+
+      if (tabName === 'app') {
+        tabApp.classList.remove('hidden');
+        tabCode.classList.add('hidden');
+        btnApp.className = "px-5 py-2 rounded-md font-bold text-sm transition-all bg-red-600 text-white shadow-md";
+        btnCode.className = "px-5 py-2 rounded-md font-bold text-sm transition-all text-slate-400 hover:text-white";
+      } else {
+        tabApp.classList.add('hidden');
+        tabCode.classList.remove('hidden');
+        btnCode.className = "px-5 py-2 rounded-md font-bold text-sm transition-all bg-red-600 text-white shadow-md";
+        btnApp.className = "px-5 py-2 rounded-md font-bold text-sm transition-all text-slate-400 hover:text-white";
+      }
+    }
+  </script>
+</body>
+</html>
